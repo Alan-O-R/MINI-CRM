@@ -8,8 +8,26 @@ DB_PATH = DATA_DIR / "lead.json"
 #CRUD
 #CREATE - create_lead()
 #READ - read_leads()
-#UPDATE
-#DELETE
+#UPDATE - 
+#DELETE - delete_lead()
+
+def delete_lead(id):
+    leads = read_leads()
+    
+    if not leads:
+        print("Nenhum lead adicionado ainda")
+        return
+    
+    for i ,lead in enumerate(leads):
+        if not lead['id'] == id:
+            print("Lead não encontrado")
+            return
+        else:
+            if lead['id'] == id:
+                leads.pop(i)
+                print("Lead apagado com sucesso")
+                # break
+    DB_PATH.write_text(json.dumps(leads, ensure_ascii=False, indent=2), encoding= "utf-8")
 
 def read_db():
     return DB_PATH.read_text(encoding = "utf-8")
@@ -29,7 +47,7 @@ def create_lead(lead_dict):
         DB_PATH.write_text(json.dumps([lead_dict], ensure_ascii=False, indent=2), encoding= "utf-8")
     else:   
         try:
-            removerFinal = open(DB_PATH, "rb+", encoding = "utf-8")
+            removerFinal = open(DB_PATH, "rb+")
             removerFinal.seek(-1, 2)
             removerFinal.truncate()
             removerFinal.seek(-2, 2)
@@ -51,10 +69,36 @@ def read_leads_busca(query):
        if query in txt_lead:
            results.append(lead)
     if not results:
-        print("Nada encontrado")
         return []
     else:
         return results
+    
+def updating(id):
+    leads = read_leads()
+        
+    if not leads:
+        print("Nenhum lead adicionado ainda")
+        return
+        
+    for i ,lead in enumerate(leads):
+        if not lead['id'] == id:
+            print("Lead não encontrado")
+            return
+        else:
+            if lead['id'] == id:
+                troca = input("Escolha que dado vai mudar(Nome/Empresa/Email): ").strip().lower()
+                if troca == "nome":
+                    nome_novo = input("Digite seu novo nome:").title()
+                    lead['name'] = nome_novo
+                elif troca == "empresa":
+                    empresa_nova = input("Digite o nome da nova Empresa:").title()
+                    lead['company'] = empresa_nova
+                elif troca == "email":
+                    email_novo = input("Digite seu novo email:")
+                    lead['email'] = email_novo
+                else:
+                    print("Dado não encontardo")
+    DB_PATH.write_text(json.dumps(leads, ensure_ascii=False, indent=2), encoding= "utf-8")
 
 def export_csv():
     # vai exportar os leads para um csv
