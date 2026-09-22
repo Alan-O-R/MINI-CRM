@@ -1,0 +1,18 @@
+[
+  {
+    "id": 314,
+    "name": "Alan",
+    "company": "Fiap",
+    "email": "Alan@gmail.com",
+    "stage": "pleno",
+    "created": "2026-09-22"
+  },
+  {
+    "id": 239,
+    "name": "pablo é milho",
+    "company": "Cartel",
+    "email": "ecobar@yahoo.com",
+    "stage": "plenamente morto",
+    "created": "2026-09-22"
+  }
+]

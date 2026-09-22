@@ -1,7 +1,8 @@
 from datetime import date
 
-def model_lead(name,company,email,stage):
+def model_lead(id,name,company,email,stage):
     return{
+        "id": id,
         "name": name,
         "company": company,
         "email": email,

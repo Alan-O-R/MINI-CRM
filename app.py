@@ -1,7 +1,9 @@
 from model import model_lead
 import control 
+from random import randint
 
 def add_lead():
+    id = randint(100,999)
     name = input("Nome: ")
     email = input("Email: ")
     company = input("Empresa: ")
@@ -18,7 +20,7 @@ def add_lead():
     # depois de modelados...
 
     # vou precisar chamar control.py para enviar os dados modelados para o banco de dados json
-    control.create_lead(model_lead(name, company, email, stage ))
+    control.create_lead(model_lead( id, name, company, email, stage ))
 
 def list_leads():
     leads = control.read_leads()
@@ -27,9 +29,9 @@ def list_leads():
         print("Nenhum lead encontrado")
         return
 
-    print("\n #| Nome                | Empresa             | Email")
+    print(f"\n {"ID":<5}|{"Nome":<10}|{"Empresa":<10}|{"Email":<10}")
     for i ,lead in enumerate(leads):
-        print(f"{i:2d}| {lead["name"]:<20}| {lead["company"]:<20}| {lead["email"]:<20}")
+        print(f" {lead["id"]:<5}|{lead["name"]:<10}|{lead["company"]:<10}|{lead["email"]:<10}")
 
 def search_leads():
     query = input("Buscar por:").strip().lower()
@@ -44,11 +46,9 @@ def search_leads():
     # if not i in control.read_leads_busca(query):
     #     print("aaaa") 
     # else:
-    print(f"\n #| {"Nome":<10}| {"Empresa":<10}| {"Email":<10}")
+    print(f"\n {"ID":<5}|{"Nome":<10}|{"Empresa":<10}|{"Email":<10}")
     for i ,lead in enumerate(leads_finded):
-        print(f"{i:2d}| {lead["name"]:<10}| {lead["company"]:<10}| {lead["email"]:<10}")
-
-    
+        print(f" {lead["id"]:<5}|{lead["name"]:<10}|{lead["company"]:<10}|{lead["email"]:<10}")
 
 def export_leads():
     path_csv = control.export_csv()
@@ -67,6 +67,7 @@ def  main():
         print("[2]- Listar leads")
         print("[3]- Buscar (nome/e-mail/empresa)")
         print("[4]- Exportar para CSV")
+        print("[5]- Apagar lead")
         print("[0]- Sair do programa")
 
         opt = input("escolha uma opção: ").strip()
@@ -78,14 +79,13 @@ def  main():
             search_leads()
         elif opt == "4":
             export_leads()
+        elif opt == "5":
+            print("apagado")
         elif opt == "0":
             print("Saindo...")
             break
         else:
             print("Opção invalida")
-
-
-
 
 if __name__=="__main__":
     main()
